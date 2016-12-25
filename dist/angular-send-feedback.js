@@ -65,7 +65,8 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                             screenshotStroke:       true,
                             highlightElement:       true,
                             initialBox:             false,
-                            headers:                {}
+                            headers:                {},
+                            user:                   {}
                     }, options);
                         var supportedBrowser = !!window.HTMLCanvasElement;
                         var isFeedbackButtonNative = settings.feedbackButton == '.feedback-btn';
@@ -545,6 +546,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
 
                                         post.img = img;
                                         post.note = $('#feedback-note').val();
+                                        post.user = settings.user;
                                         var data = {feedback: post};
                                         var jsonData = JSON.stringify(data);
                                         settings.headers['Content-Type'] = 'application/json';
