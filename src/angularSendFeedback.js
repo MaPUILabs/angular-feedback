@@ -49,7 +49,8 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                             onClose:                function() {},
                             screenshotStroke:       true,
                             highlightElement:       true,
-                            initialBox:             false
+                            initialBox:             false,
+                            headers:                {}
                     }, options);
                         var supportedBrowser = !!window.HTMLCanvasElement;
                         var isFeedbackButtonNative = settings.feedbackButton == '.feedback-btn';
@@ -531,15 +532,14 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                         post.note = $('#feedback-note').val();
                                         var data = {feedback: post};
                                         var jsonData = JSON.stringify(data);
+                                        settings.headers['Content-Type'] = 'application/json';
                                         $.ajax({
                                             url: typeof settings.ajaxURL === 'function' ? settings.ajaxURL() : settings.ajaxURL,
                                             dataType: 'json',
                                             contentType: 'application/json',
                                             type: 'POST',
                                             data: jsonData,
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
+                                            headers: settings.headers,
                                             success: function() {
                                                 $('#feedback-module').append(settings.tpl.submitSuccess);
                                             },
