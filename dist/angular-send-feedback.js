@@ -73,7 +73,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                         var _html2canvas = false;
                         if (supportedBrowser) {
                             if(isFeedbackButtonNative) {
-                                $('body').append(settings.tpl.initButton);
+                               angular.element(document.body).append($compile(settings.tpl.initButton)($scope));
                             }
                             $(document).on('click', settings.feedbackButton, function(){
                                 if(isFeedbackButtonNative) {
@@ -96,7 +96,8 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
 
                                 tpl += settings.tpl.highlighter + settings.tpl.overview + '<canvas id="feedback-canvas"></canvas><div id="feedback-helpers"></div><input id="feedback-note" name="feedback-note" type="hidden"></div>';
 
-                                $('body').append(tpl);
+                               angular.element(document.body).append($compile(tpl)($scope));
+                              $scope.$apply();
 
                                 moduleStyle = {
                                     'position': 'absolute',
@@ -558,10 +559,10 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ function(
                                             data: jsonData,
                                             headers: settings.headers,
                                             success: function() {
-                                                $('#feedback-module').append(settings.tpl.submitSuccess);
+                                              angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitSuccess)($scope));
                                             },
                                             error: function(){
-                                                $('#feedback-module').append(settings.tpl.submitError);
+                                              angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitError)($scope));
                                             }
                                         });
                                     }
