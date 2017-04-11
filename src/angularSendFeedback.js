@@ -346,6 +346,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                                     redraw(ctx);
                                 });
 
+                                console.log("Before Next btn click binding with button: ", $('#feedback-welcome-next'));
                                 $(document).on('click', '#feedback-welcome-next', function() {
                                     if ($('#feedback-note').val().length > 0) {
                                         canDraw = true;

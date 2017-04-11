@@ -1,6 +1,6 @@
 /**
  * Angular feedback directive similar to Google Feedback
- * @version v1.2.0 - 2016-06-28 * @link https://github.com/jacobscarter/angular-feedback
+ * @version v1.2.1 - 2017-04-11 * @link https://github.com/jacobscarter/angular-feedback
  * @author Jacob Carter <jacob@ieksolutions.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -73,7 +73,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                         var _html2canvas = false;
                         if (supportedBrowser) {
                             if(isFeedbackButtonNative) {
-                               angular.element(document.body).append($compile(settings.tpl.initButton)($scope));
+                                angular.element(document.body).append($compile(settings.tpl.initButton)($scope));
                             }
                             $(document).on('click', settings.feedbackButton, function(){
                                 if(isFeedbackButtonNative) {
@@ -96,8 +96,8 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
 
                                 tpl += settings.tpl.highlighter + settings.tpl.overview + '<canvas id="feedback-canvas"></canvas><div id="feedback-helpers"></div><input id="feedback-note" name="feedback-note" type="hidden"></div>';
 
-                               angular.element(document.body).append($compile(tpl)($scope));
-                              $scope.$apply();
+                                angular.element(document.body).append($compile(tpl)($scope));
+                                        $scope.$apply();
 
                                 moduleStyle = {
                                     'position': 'absolute',
@@ -361,6 +361,7 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                                     redraw(ctx);
                                 });
 
+                                console.log("Before Next btn click binding with button: ", $('#feedback-welcome-next'));
                                 $(document).on('click', '#feedback-welcome-next', function() {
                                     if ($('#feedback-note').val().length > 0) {
                                         canDraw = true;
@@ -559,9 +560,11 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                                             data: jsonData,
                                             headers: settings.headers,
                                             success: function() {
+                                           //     $('#feedback-module').append(settings.tpl.submitSuccess);
                                               angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitSuccess)($scope));
                                             },
                                             error: function(){
+                                           //     $('#feedback-module').append(settings.tpl.submitError);
                                               angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitError)($scope));
                                             }
                                         });
