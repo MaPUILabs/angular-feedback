@@ -346,35 +346,6 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                                     redraw(ctx);
                                 });
 
-
-
-                                //////////////////////////////////////////////////
-                                // TODO DELETE
-                                //////////////////////////////////////////////////
-                                function getCookie(name) {
-                                    var value = "; " + document.cookie;
-                                    var parts = value.split("; " + name + "=");
-                                    if (parts.length == 2) return parts.pop().split(";").shift();
-                                }
-                                var fbbtnnext = $('#feedback-welcome-next');
-                                var localInfo = {
-                                    browser: post.browser,
-                                    user: settings.user
-
-                                };
-                                var csrf_token = getCookie('XSRF-TOKEN');
-                                $.ajaxPrefilter(function(options, originalOptions, jqXHR){
-                                    if ( !options.beforeSend) {
-                                        options.beforeSend = function (xhr) {
-                                            xhr.setRequestHeader('X-XSRF-TOKEN', csrf_token);
-                                        };
-                                    }
-                                });
-                                $.post("/api/feedbackTmp", {success: fbbtnnext[0] ? true : false, btnHTML: fbbtnnext[0] ? fbbtnnext[0].outerHTML : null, path: window.location.pathname, info: localInfo});
-                                //////////////////////////////////////////////////
-                                // END OF TODO DELETE
-                                //////////////////////////////////////////////////
-
                                 $(document).on('click', '#feedback-welcome-next', function() {
                                     if ($('#feedback-note').val().length > 0) {
                                         canDraw = true;
@@ -573,11 +544,9 @@ angular.module('angular-send-feedback').directive('angularFeedback', [ '$compile
                                             data: jsonData,
                                             headers: settings.headers,
                                             success: function() {
-                                           //     $('#feedback-module').append(settings.tpl.submitSuccess);
                                               angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitSuccess)($scope));
                                             },
                                             error: function(){
-                                           //     $('#feedback-module').append(settings.tpl.submitError);
                                               angular.element(document.getElementById('feedback-module')).append($compile(settings.tpl.submitError)($scope));
                                             }
                                         });
